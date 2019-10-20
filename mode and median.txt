@@ -1,0 +1,62 @@
+/*
+?¨²¨ºyo¨ª?D??¨ºy 
+¨¤??y¦Ì¨¤ 10.17
+*/
+#include<iostream>
+#include<cstdio>
+#include<algorithm>
+int l[500];//line
+int cnt[151];//count:mode
+using namespace std;
+int main()
+{
+	int n,nn;//number_of_lines,number_of_numbers_each_line
+	char ch;
+	cin>>n;
+	for(int i=0;i<n;i++)
+	{
+		//cout<<'*'<<endl;
+		/*cout<<"i="<<i<<endl;*/
+		nn=0;
+		for(int j=0;j<=150;j++)
+			cnt[j]=0;
+		do
+		{
+			cin>>l[nn];
+			++cnt[l[nn]];
+			++nn;
+			ch=getchar();
+		} while(ch==',');
+		 
+		int mode=0,judge=0;
+		for(int j=1;j<=150;j++)
+		{
+			if(cnt[j]>cnt[mode])
+				mode=j;
+			else if(cnt[j]==cnt[mode])
+				 {
+				 	int pj,pmode;
+				 	for(int k=0;k<nn;k++)
+				 		if(l[k]==j)	{pj=k;break; }
+				 	for(int k=0;k<nn;k++)
+				 		if(l[k]==mode)	{pmode=k;break; }
+				 	if(pj<pmode)mode=j;
+				 }
+			if(cnt[j]>0&&cnt[j]<nn)
+			 	judge=1;
+		}
+		cout<<"mode=";
+		if(judge)
+			cout<<mode;
+		else
+			cout<<"NO";
+		cout<<',';
+		 
+		sort(l,l+nn);
+		if(nn%2==1)
+			cout<<"median="<<l[(nn+1)/2-1]<<endl;/*for(int j=0;j<nn;j++)cout<<endl<<l[j]<<endl;*/
+		else
+			printf("median=(%i+%i)/2\n",l[nn/2-1],l[nn/2]);
+	}	
+	return 0;
+}
